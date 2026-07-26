@@ -92,10 +92,11 @@ playwright install chromium
 
 ```bash
 pytest
-python live_board.py
+python driver.py --games 1 --budget-ms 100 --keep-open
+python diagnostics/live_board.py
 ```
 
-`live_board.py` watches parsed board state while you play manually. The bot itself is not runnable yet.
+The bot runs against the live site via `driver.py`. `diagnostics/live_board.py` is just for watching parsed board state during development.
 
 ## 8. Roadmap
 
