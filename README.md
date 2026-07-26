@@ -1,4 +1,4 @@
-# 2048masterbot
+# expectimax2048bot
 
 A 2048 bot written entirely in Python. No compiled core, no ML, no training. Just search and a good heuristic, built to see how far pure Python could actually go.
 
@@ -166,15 +166,6 @@ The `--budget-ms` flag is the one dial that matters: it's the thinking time per 
 ## How it's tested
 
 The move engine is the kind of code where a bug is silent. A wrong bit shift doesn't crash, it just makes the bot play slightly wrong moves that are nearly impossible to spot from the outside. So `board.py` ships with a second, deliberately slow implementation of the move logic written in plain nested lists, and the test suite checks that the fast bitboard version and the slow obvious version agree on the result and score across 2,000 random boards in all four directions. If the bit tricks are ever wrong, the tests catch it immediately.
-
----
-
-## What's next
-
-- [ ] Port the hot loop to a JIT-compiled or compiled path for a big depth boost
-- [ ] Tune the heuristic weights empirically against the benchmark harness
-- [ ] A vision-based reader that works on any 2048 site, not just this one
-- [ ] Chase 16384
 
 ---
 
