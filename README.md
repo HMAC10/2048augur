@@ -58,8 +58,10 @@ Found by diagnostic probing (not encoded as constants in the engine):
 | `grid[r][0]` | left column |
 | Writes | on every move that changes the board; no-ops do not write |
 | Arrow keys | register only after clicking the canvas for focus |
+| Win overlay | DOM over the canvas: `div.game-message.game-won` with `a.keep-playing-button` ("Keep going"), not canvas-drawn |
+| `keepPlaying` write | setting `keepPlaying=true` in localStorage without a reload does not dismiss the overlay or restore keys |
 
-`won` and `keepPlaying` arrive in the same read as the board, which makes the win overlay easy to detect. Bots that miss it cap out around 20,000 points because the game stops accepting input at 2048.
+`won` and `keepPlaying` arrive in the same read as the board, which makes the win overlay easy to detect. The overlay must be dismissed by clicking `a.keep-playing-button`; a naive localStorage-only approach is why bots cap around 20,700 points — one tile short of continuing past 2048.
 
 ## 6. Setup
 

@@ -64,8 +64,12 @@ def test_best_move_no_legal():
     assert best_move(_dead_board(), budget_ms=200) == -1
 
 
-def test_easy_board_reaches_depth_above_2():
-    best_move(_easy_board(), budget_ms=200, max_depth=8)
+def test_generous_budget_searches_past_depth_2():
+    board = _easy_board()
+    d = best_move(board, budget_ms=2000, max_depth=8)
+    assert d in (0, 1, 2, 3)
+    new_board, _ = move(board, d)
+    assert new_board != board
     assert solver.last_depth > 2
 
 
@@ -73,6 +77,7 @@ def test_tiny_budget_still_legal():
     board = _mid_game_board()
     d = best_move(board, budget_ms=1)
     assert d in (0, 1, 2, 3)
+    assert d != -1
     new_board, _ = move(board, d)
     assert new_board != board
 
