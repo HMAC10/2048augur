@@ -4,7 +4,7 @@ A 2048 bot written entirely in Python. No compiled core, no ML, no training. Jus
 
 ![The bot chaining tiles into 8192](assets/demo.gif)
 
-**Best run: 122,020 points, 8192 tile.** For reference, that's roughly 4x the top score on the public leaderboard of the site it plays.
+**Best run: 122,020 points, 8192 tile.** For reference, that's roughly 4x the top score on the public leaderboard of the site it plays. That run actually hit a 5,000-move safety cap while still alive, with legal moves remaining. Its true ceiling is untested.
 
 ---
 
