@@ -1,4 +1,4 @@
-# expectimax2048bot
+# Expectimax 2048 Bot
 
 A 2048 bot written entirely in Python. No compiled core, no ML, no training. Just search and a good heuristic, built to see how far pure Python could actually go.
 
