@@ -61,22 +61,29 @@ The fix was to search on a time budget instead. The bot searches depth 2, then 3
 
 ---
 
-## The interesting part: depth barely mattered
+## The interesting part: depth is expensive and barely moves
 
 Here's the finding that made this project worth writing up.
 
-I expected search depth to be the main lever. It wasn't even close. Giving the bot **10x more time per move moved its average search depth by less than a tenth of a ply.**
+I expected search depth to be the main lever, that more thinking time would translate straight into deeper lookahead and better play. It doesn't, at least not efficiently. I measured average search depth across a fixed set of 25 real game positions, sweeping the time budget from 1ms to 1600ms:
 
-| Time budget per move | Average depth reached |
-|---|---|
-| 20 ms | 2.10 |
-| 200 ms | 2.19 |
+| Budget per move | Avg depth | Positions searched |
+|---|---|---|
+| 1 ms | 2.00 | 2,600 |
+| 20 ms | 2.08 | 6,400 |
+| 100 ms | 2.24 | 22,000 |
+| 200 ms | 2.56 | 41,000 |
+| 400 ms | 3.00 | 80,000 |
+| 800 ms | 3.20 | 159,000 |
+| 1600 ms | 3.44 | 315,000 |
 
-Ten times the thinking, for essentially the same depth. The reason is the branching factor. Each extra ply of lookahead costs roughly **48x more work** (four directions, times two possible tile values, times a dozen-ish empty cells). So going one level deeper doesn't cost twice as much, it costs fifty times as much. Time runs out almost immediately.
+**80x the time budget buys 1.65x the depth.** Going from 20ms to 1600ms, the bot searches roughly 50x more positions per move and gains less than a ply and a half of average lookahead.
 
-Which leads to the real punchline: **the bot scored 80,000 and reached 4096 at an average depth of barely 2.** It's looking one move ahead and still crushing the game. That means the strength isn't coming from the search at all. It's coming from the **heuristic**. The evaluation function, the thing that scores how healthy a board looks, is doing almost all of the work. Search is just polish on top of good taste.
+The reason is the branching factor. Each extra ply of lookahead costs the four directions, times two possible tile values, times a dozen-ish empty cells, so going one level deeper doesn't cost twice as much, it costs on the order of fifty times as much. You pay exponentially for depth that only grows linearly, so time runs out fast.
 
-If you take one thing from this project: for 2048, a great evaluation function beats a deep search, and it isn't close.
+Which leads to the real punchline: **the bot reaches 4096 and scores over 80,000 at an average depth of barely 2.** It's looking about two moves ahead and still crushing the game. The strength isn't coming from the search, it's coming from the **heuristic**, the function that scores how healthy a board looks. Search depth is polish on top of good taste, and it's expensive polish.
+
+If you take one thing from this project: for 2048, a strong evaluation function beats deep search per unit of effort, and it isn't close.
 
 ---
 
@@ -128,8 +135,8 @@ benchmark.py   plays full games offline, no browser, for measuring strength
 Requires Python 3.10+.
 
 ```bash
-git clone https://github.com/HMAC10/2048masterbot.git
-cd 2048masterbot
+git clone https://github.com/HMAC10/2048augur.git
+cd 2048augur
 
 python -m venv .venv
 # Windows

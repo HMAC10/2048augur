@@ -15,6 +15,7 @@ _nodes = 0
 _deadline = 0.0
 _node_cap = NODE_CAP
 last_depth = 0
+last_nodes = 0
 
 
 class SearchAborted(Exception):
@@ -72,7 +73,7 @@ def best_move(
     budget_ms: int = DEFAULT_BUDGET_MS,
     max_depth: int = MAX_DEPTH,
 ) -> int:
-    global _tt, _nodes, _deadline, _node_cap, last_depth
+    global _tt, _nodes, _deadline, _node_cap, last_depth, last_nodes
 
     legal: list[tuple[int, int]] = []
     for d in range(4):
@@ -81,10 +82,12 @@ def best_move(
             legal.append((d, new_board))
     if not legal:
         last_depth = 0
+        last_nodes = 0
         return -1
 
     _tt = {}
     last_depth = 0
+    last_nodes = 0
     best = -1
     t0 = time.perf_counter()
     deadline = t0 + budget_ms / 1000.0
@@ -108,7 +111,9 @@ def best_move(
                     best_d = d
             best = best_d
             last_depth = depth
+            last_nodes += _nodes
         except SearchAborted:
+            last_nodes += _nodes
             break
 
         if time.perf_counter() >= deadline:
