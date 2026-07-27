@@ -99,7 +99,7 @@ The bots that chase world records (reaching 16384 and even 32768) run the same c
 | Reaches 16384 | not yet | ~90% of games |
 | Reaches 32768 | no | ~1 in 3 games |
 
-The gap is real, but look at the exchange rate. Going from a very good bot to a near-record bot means jumping from depth 2-3 to depth 6-8, which costs a **100x speedup** in a compiled language to buy roughly **four extra plies**. That is a punishing trade, and it's the same lesson as the finding above: depth has vicious diminishing returns.
+The gap is definitely there, but look at the exchange rate. Going from a very good bot to a near-record bot means jumping from depth 2-3 to depth 6-8, which costs a **100x speedup** in a compiled language to buy roughly **four extra plies**. That is a punishing trade, and it's the same lesson as the finding above: depth has vicious diminishing returns.
 
 Which is oddly encouraging. The distance between this Python bot and a world-record bot isn't some clever insight I'm missing. It's the same machine running on a faster engine. Port the hot loop to compiled code and tune the weights against millions of games, and most of that gap closes.
 
