@@ -1,6 +1,6 @@
 # 2048 Augur
 
-A 2048 bot written entirely in Python. No compiled core, no ML, no training. It's just search and a good heuristic. Built this to just see how far pure Python could actually go.
+A 2048 bot written entirely in Python. No compiled core, no ML, no training. It's just search and a good heuristic. Built this to see how far pure Python could actually go.
 
 ![The bot chaining tiles into 8192](assets/demo.gif)
 
